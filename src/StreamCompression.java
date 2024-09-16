@@ -10,7 +10,7 @@ public class StreamCompression {
     public static String compressStream(char c, boolean add) {
         char lowerCase = Character.toLowerCase(c);
         STATE.putIfAbsent(lowerCase, 0);
-        STATE.computeIfPresent(lowerCase, (k, v) -> add ? v + 1 : v - 1);
+        STATE.computeIfPresent(lowerCase, (k, v) -> add ? v + 1 : (v > 0 ? v - 1 : 0));
 
         StringBuilder result = new StringBuilder();
 
@@ -30,8 +30,6 @@ public class StreamCompression {
         System.out.println(compressStream('a', true));
         System.out.println(compressStream('t', true));
         System.out.println(compressStream('b', true));
-        System.out.println(compressStream('N', false));
-        System.out.println(compressStream('N', false));
         System.out.println(compressStream('N', false));
     }
 }
